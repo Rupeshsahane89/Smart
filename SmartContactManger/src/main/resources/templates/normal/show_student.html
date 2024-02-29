@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body vh-100">
+
+				<!--class="search-student my-4">
+					<input id="search-contact" onkeyup="serachs()" type="text"
+						class="form-control" name="contact_name"
+						placeholder="Search student">
+					<div class="serach-result"></div>
+				</div>-->
+
+				<div>
+
+					<form class="form-inline " th:action="@{'/user/show_student/0'}" method="post">
+						<input name="contact_name" id="search-stduent-name" class="form-control mr-sm-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+				</div>
+
+
+
+				<div></div>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">id</th>
+								<th scope="col">Name</th>
+								<th scope="col">Email</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Address</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="(c:${students})">
+								<th th:text="${c.studentid}" scope="row">1</th>
+								<td><span th:text="${c.name}"></span></td>
+								<td><a th:href="@{'/user/'+${c.studentid}+'/student'}"> <span
+											th:text="${c.email}"></span></a></td>
+								<!-- <td th:text="${c.mobileno}"></td> -->
+								<td><span th:text="${c.mobileno}"></span></td>
+								<td><span th:text="${c.address}"></span></td>
+								<td><a th:href="@{'/user/'+${c.studentid}+'/deleteStud'}"><button
+											class="btn btn-danger btn-sm">Delete</button></a>
+									<form th:action="@{'/user/'+${c.studentid}+'/edit'}" method="Post">
+										<button class="btn btn-primary btn-sm mt-2">Update</button>
+									</form>
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+
+
+
+				</div>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li th:if="${currentPage !=0}" class="page-item"><a
+								th:href="@{'/user/show_student/'+${currentPage-1}}" class="page-link"
+								href="#">Previous</a></li>
+
+						<li th:classappend="${currentPage==i-1?'active':''}"
+							th:each="i:${#numbers.sequence(totalPages==0?0:1,totalPages)}" class="page-item"><a
+								th:href="@{'/user/show_student/'+${i==0?0:i-1}}" class="page-link" href="#"><span
+									th:text="${i}"></span></a></li>
+
+						<li th:if="${totalPages==0?currentPage:currentPage+1 != totalPages }" class="page-item"><a
+								th:href="@{'/user/show_student/'+${totalPages==0?currentPage:currentPage+1}}"
+								class="page-link" href="#">Next</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>
